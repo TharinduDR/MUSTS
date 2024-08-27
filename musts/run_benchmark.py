@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 def capitalise_words(word):
     parts = word.split('_')
     capitalised_parts = [part.capitalize() for part in parts]
-    return ''.join(capitalised_parts)
+    return ' '.join(capitalised_parts)
 
 
 
