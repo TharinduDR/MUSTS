@@ -36,9 +36,9 @@ def test(test_method, train_method=None):
             sims.append(row['similarity'])
 
         predicted_sims = test_method(to_predit)
-        logging.info("Pearson Correlation ", pearson_corr(predicted_sims, sims))
-        logging.info("Spearman Correlation ", spearman_corr(predicted_sims, sims))
-        logging.info("RMSE ", rmse(predicted_sims, sims))
+        logging.info("Pearson Correlation %f", pearson_corr(predicted_sims, sims))
+        logging.info("Spearman Correlation %f", spearman_corr(predicted_sims, sims))
+        logging.info("RMSE %f", rmse(predicted_sims, sims))
 
 
 
