@@ -40,6 +40,8 @@ def test(test_method, train_method=None):
         logging.info("Spearman Correlation %f", spearman_corr(predicted_sims, sims))
         logging.info("RMSE %f", rmse(predicted_sims, sims))
 
+        logging.info("=============================================")
+
 
 
 
