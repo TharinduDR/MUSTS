@@ -1,11 +1,11 @@
 # To run this you need to do pip install -U FlagEmbedding
 
 from sentence_transformers import util
-from FlagEmbedding import FlagModel
+from FlagEmbedding import FlagLLMModel
 
 from musts.run_benchmark import test
 
-model = FlagModel('BAAI/bge-multilingual-gemma2',
+model = FlagLLMModel('BAAI/bge-multilingual-gemma2',
                   query_instruction_for_retrieval="Represent this sentence for searching relevant passages:",
                   use_fp16=True)
 
