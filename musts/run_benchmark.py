@@ -16,8 +16,10 @@ def capitalise_words(word):
 
 
 def test(test_method, train_method=None):
-    languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "korean", "portuguese",
-                 "romanian", "serbian", "sinhala", "spanish", "tamil"]
+    # languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "korean", "portuguese",
+    #              "romanian", "serbian", "sinhala", "spanish", "tamil"]
+
+    languages = ["english", "sinhala", "spanish", "tamil"]
 
     for language in languages:
 
