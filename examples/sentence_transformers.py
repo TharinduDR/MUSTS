@@ -16,7 +16,7 @@ def predict(to_predict):
     embeddings_2 = model.encode(sentences_2, batch_size=32, show_progress_bar=True, prompt_name=query_prompt_name)
 
     cosine_similarity_matrix = util.cos_sim(embeddings_1, embeddings_2)
-    sims = cosine_similarity_matrix.flatten().tolist()
+    sims = cosine_similarity_matrix.diagonal().tolist()
 
     return sims
 
