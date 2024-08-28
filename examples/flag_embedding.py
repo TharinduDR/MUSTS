@@ -10,7 +10,6 @@ model = FlagModel('BAAI/bge-multilingual-gemma2',
                   use_fp16=True)
 
 def predict(to_predict):
-    query_prompt_name = "s2s_query"
     sentences_1 = list(zip(*to_predict))[0]
     sentences_2 = list(zip(*to_predict))[1]
 
