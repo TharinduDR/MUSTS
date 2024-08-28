@@ -1,6 +1,6 @@
 # To run this you need to do pip install sentence_transformers
 
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer, util
 import tqdm
 import numpy as np
 from numpy.linalg import norm
@@ -15,7 +15,7 @@ def predict(to_predict):
     embeddings_1 = model.encode(sentences_1, batch_size=32, show_progress_bar=True, prompt_name=query_prompt_name)
     embeddings_2 = model.encode(sentences_2, batch_size=32, show_progress_bar=True, prompt_name=query_prompt_name)
 
-    sims = model.util.pairwise_cos_sim(embeddings_1, embeddings_2)
+    sims = util.pytorch_cos_sim(embeddings_1, embeddings_2)
 
     return sims
 
