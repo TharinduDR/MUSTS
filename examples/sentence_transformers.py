@@ -9,6 +9,7 @@ from musts.run_benchmark import test
 def predict(to_predict):
     query_prompt_name = "s2s_query"
     model = SentenceTransformer("dunzhang/stella_en_1.5B_v5", trust_remote_code=True).cuda()
+    model.max_seq_length = 256
     sentences_1 = list(zip(*to_predict))[0]
     sentences_2 = list(zip(*to_predict))[1]
 
