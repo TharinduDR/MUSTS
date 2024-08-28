@@ -15,7 +15,9 @@ def predict(to_predict):
     embeddings_1 = model.encode(sentences_1, batch_size=32, show_progress_bar=True, prompt_name=query_prompt_name)
     embeddings_2 = model.encode(sentences_2, batch_size=32, show_progress_bar=True, prompt_name=query_prompt_name)
 
-    sims = util.pytorch_cos_sim(embeddings_1, embeddings_2)
+    cosine_similarity_matrix = util.cos_sim(embeddings_1, embeddings_2)
+    sims = cosine_similarity_matrix.flatten().tolist()
+
     return sims
 
 test(predict)
