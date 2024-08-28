@@ -35,7 +35,12 @@ def test(test_method, train_method=None):
             to_predit.append([row['sentence_1'], row['sentence_2']])
             sims.append(row['similarity'])
 
+
+
         predicted_sims = test_method(to_predit)
+
+        print(len(sims))
+        print(len(predicted_sims))
         logging.info("Pearson Correlation %f", pearson_corr(predicted_sims, sims))
         logging.info("Spearman Correlation %f", spearman_corr(predicted_sims, sims))
         logging.info("RMSE %f", rmse(predicted_sims, sims))

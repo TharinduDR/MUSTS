@@ -16,7 +16,6 @@ def predict(to_predict):
     embeddings_2 = model.encode(sentences_2, batch_size=32, show_progress_bar=True, prompt_name=query_prompt_name)
 
     sims = util.pytorch_cos_sim(embeddings_1, embeddings_2)
-
     return sims
 
 test(predict)
