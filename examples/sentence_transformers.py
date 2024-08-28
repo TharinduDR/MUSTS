@@ -6,7 +6,7 @@ import numpy as np
 from numpy.linalg import norm
 from musts.run_benchmark import test
 
-model = SentenceTransformer("dunzhang/stella_en_1.5B_v5", trust_remote_code=True).cuda()
+model = SentenceTransformer("ddunzhang/stella_en_400M_v5", trust_remote_code=True).cuda()
 
 def predict(to_predict):
     query_prompt_name = "s2s_query"
