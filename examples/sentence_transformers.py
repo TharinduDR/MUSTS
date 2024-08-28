@@ -1,9 +1,6 @@
 # To run this you need to do pip install sentence_transformers
 
 from sentence_transformers import SentenceTransformer, util
-import tqdm
-import numpy as np
-from numpy.linalg import norm
 from musts.run_benchmark import test
 
 model = SentenceTransformer("dunzhang/stella_en_400M_v5", trust_remote_code=True).cuda()
