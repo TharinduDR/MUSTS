@@ -32,9 +32,9 @@ def train(train_df):
 
     # 4. Define an evaluator for use during training. This is useful to keep track of alongside the evaluation loss.
     dev_evaluator = EmbeddingSimilarityEvaluator(
-        sentences1=eval["sentence_1"],
-        sentences2=eval["sentence_2"],
-        scores=eval["score"],
+        sentences1=eval["sentence_1"].tolist(),
+        sentences2=eval["sentence_2"].tolist(),
+        scores=eval["score"].tolist(),
         main_similarity=SimilarityFunction.COSINE,
         name="sts-dev",
     )
