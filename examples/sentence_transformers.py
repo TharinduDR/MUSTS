@@ -3,7 +3,7 @@
 from sentence_transformers import SentenceTransformer, util
 from musts.run_benchmark import test
 
-model = SentenceTransformer("Salesforce/SFR-Embedding-Mistral", trust_remote_code=True).cuda()
+model = SentenceTransformer("Lajavaness/bilingual-embedding-large", trust_remote_code=True).cuda()
 
 def predict(to_predict):
     # query_prompt_name = "s2s_query"
