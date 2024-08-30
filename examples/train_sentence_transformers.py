@@ -87,7 +87,7 @@ def predict(to_predict):
     cosine_similarity_matrix = util.cos_sim(embeddings_1, embeddings_2)
     sims = cosine_similarity_matrix.diagonal().tolist()
 
-    model = None
+    del(model)
 
     return sims
 
