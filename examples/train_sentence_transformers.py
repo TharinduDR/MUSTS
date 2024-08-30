@@ -21,7 +21,7 @@ def train(train_df):
 
     # 1. Here we define our SentenceTransformer model. If not already a Sentence Transformer model, it will automatically
     # create one with "mean" pooling.
-    model = SentenceTransformer(model_name)
+    model = SentenceTransformer(model_name, trust_remote_code=True)
     train_df = train_df["sentence_1", "sentence_2", "similarity"]
     train_df = train_df.rename(columns={'similarity': 'score'})
 
