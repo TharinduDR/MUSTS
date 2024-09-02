@@ -6,6 +6,7 @@ from sentence_transformers.trainer import SentenceTransformerTrainer
 from sentence_transformers.training_args import SentenceTransformerTrainingArguments
 import logging
 from sklearn.model_selection import train_test_split
+from datasets import Dataset
 
 # Set the log level to INFO to get more information
 logging.basicConfig(format="%(asctime)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
@@ -26,7 +27,9 @@ def train(train_df):
     train_df['similarity'] = train_df['similarity'] / 5
     train_df = train_df.rename(columns={'sentence_1': 'sentence1', 'sentence_2': 'sentence2', 'similarity': 'score'})
 
-    train_dataset, eval_dataset = train_test_split(train_df, test_size=0.2)
+    train_df, eval_df = train_test_split(train_df, test_size=0.2)
+    train_dataset = Dataset.from_pandas(train_df)
+    eval_dataset = Dataset.from_pandas(eval_df)
 
     train_loss = losses.CosineSimilarityLoss(model=model)
     # train_loss = losses.CoSENTLoss(model=model)
@@ -39,8 +42,8 @@ def train(train_df):
         main_similarity=SimilarityFunction.COSINE,
         name="musts-dev",
     )
-    train_dataset.to_csv("train.tsv", sep='\t', encoding='utf-8', index=False, header=True)
-    eval_dataset.to_csv("eval.tsv", sep='\t', encoding='utf-8', index=False, header=True)
+    # train_dataset.to_csv("train.tsv", sep='\t', encoding='utf-8', index=False, header=True)
+    # eval_dataset.to_csv("eval.tsv", sep='\t', encoding='utf-8', index=False, header=True)
 
     # 5. Define the training arguments
     args = SentenceTransformerTrainingArguments(
