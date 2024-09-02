@@ -24,7 +24,7 @@ def train(train_df):
     model = SentenceTransformer(model_name, trust_remote_code=True)
     train_df = train_df[["sentence_1", "sentence_2", "similarity"]]
     train_df['similarity'] = train_df['similarity'] / 5
-    train_df = train_df.rename(columns={'similarity': 'score'})
+    train_df = train_df.rename(columns={'sentence_1': 'sentence1', 'sentence_2': 'sentence2', 'similarity': 'score'})
 
     train_dataset, eval_dataset = train_test_split(train_df, test_size=0.2)
 
@@ -33,8 +33,8 @@ def train(train_df):
 
     # 4. Define an evaluator for use during training. This is useful to keep track of alongside the evaluation loss.
     dev_evaluator = EmbeddingSimilarityEvaluator(
-        sentences1=eval_dataset["sentence_1"],
-        sentences2=eval_dataset["sentence_2"],
+        sentences1=eval_dataset["sentence1"],
+        sentences2=eval_dataset["sentence2"],
         scores=eval_dataset["score"],
         main_similarity=SimilarityFunction.COSINE,
         name="musts-dev",
