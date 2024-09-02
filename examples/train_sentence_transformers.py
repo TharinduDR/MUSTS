@@ -12,7 +12,7 @@ logging.basicConfig(format="%(asctime)s - %(message)s", datefmt="%Y-%m-%d %H:%M:
 
 final_output_dir = ""
 def train(train_df):
-    model_name = "Lajavaness/bilingual-embedding-large"
+    model_name = "dunzhang/stella_en_400M_v5"
     train_batch_size = 4
     num_epochs = 5
     output_dir = (
@@ -23,6 +23,7 @@ def train(train_df):
     # create one with "mean" pooling.
     model = SentenceTransformer(model_name, trust_remote_code=True)
     train_df = train_df[["sentence_1", "sentence_2", "similarity"]]
+    train_df['similarity'] = train_df['similarity'] / 5
     train_df = train_df.rename(columns={'similarity': 'score'})
 
     train_dataset, eval_dataset = train_test_split(train_df, test_size=0.2)
