@@ -37,7 +37,7 @@ def train(train_df):
         sentences2=eval_dataset["sentence_2"],
         scores=eval_dataset["score"],
         main_similarity=SimilarityFunction.COSINE,
-        name="sts-dev",
+        name="musts-dev",
     )
 
     # 5. Define the training arguments
