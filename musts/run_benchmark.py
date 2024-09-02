@@ -19,7 +19,7 @@ def test(test_method, train_method=None):
     # languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "korean", "portuguese",
     #               "romanian", "serbian", "sinhala", "spanish", "tamil"]
 
-    languages = ["english"]
+    languages = ["sinhala"]
 
 
     if train_method is not None:
