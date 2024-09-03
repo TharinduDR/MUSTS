@@ -14,14 +14,12 @@ logging.basicConfig(format="%(asctime)s - %(message)s", datefmt="%Y-%m-%d %H:%M:
 final_output_dir = ""
 def train_musts(train_df):
     model_name = "dunzhang/stella_en_400M_v5"
-    train_batch_size = 4
+    train_batch_size = 8
     num_epochs = 5
     output_dir = (
         "output/training_musts_" + model_name.replace("/", "-")
     )
 
-    # 1. Here we define our SentenceTransformer model. If not already a Sentence Transformer model, it will automatically
-    # create one with "mean" pooling.
     model = SentenceTransformer(model_name, trust_remote_code=True)
     train_df = train_df[["sentence_1", "sentence_2", "similarity"]]
     train_df['similarity'] = train_df['similarity'] / 5
@@ -29,15 +27,17 @@ def train_musts(train_df):
 
     train_df, eval_df = train_test_split(train_df, test_size=0.2)
 
+    train_df = train_df.dropna(how='any', axis=0)
+    eval_df = eval_df.dropna(how='any', axis=0)
+
     train_df = train_df.reset_index(drop=True)
     eval_df = eval_df.reset_index(drop=True)
+
     train_dataset = Dataset.from_pandas(train_df)
     eval_dataset = Dataset.from_pandas(eval_df)
 
     train_loss = losses.CosineSimilarityLoss(model=model)
-    # train_loss = losses.CoSENTLoss(model=model)
 
-    # 4. Define an evaluator for use during training. This is useful to keep track of alongside the evaluation loss.
     dev_evaluator = EmbeddingSimilarityEvaluator(
         sentences1=eval_dataset["sentence1"],
         sentences2=eval_dataset["sentence2"],
@@ -45,10 +45,7 @@ def train_musts(train_df):
         main_similarity=SimilarityFunction.COSINE,
         name="musts-dev",
     )
-    train_dataset.to_csv("train.tsv", sep='\t', encoding='utf-8', index=False, header=True)
-    eval_dataset.to_csv("eval.tsv", sep='\t', encoding='utf-8', index=False, header=True)
 
-    # 5. Define the training arguments
     args = SentenceTransformerTrainingArguments(
         # Required parameter:
         output_dir=output_dir,
@@ -81,7 +78,6 @@ def train_musts(train_df):
     trainer.train()
     final_output_dir = f"{output_dir}/final"
     model.save(final_output_dir)
-
 
 
 def predict(to_predict):

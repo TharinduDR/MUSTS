@@ -17,22 +17,17 @@ def capitalise_words(word):
 
 
 def test(test_method, train_method=None):
-    # languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "korean", "portuguese",
-    #               "romanian", "serbian", "sinhala", "spanish", "tamil"]
+    languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "korean", "portuguese",
+                  "romanian", "serbian", "sinhala", "spanish", "tamil"]
 
-    language = "sinhala"
-
+    # language = "sinhala"
 
     if train_method is not None:
-        # train_sets = []
-        # for language in languages:
-        #     dataset_name = 'musts' + '/' + language
-        #     train_set = Dataset.to_pandas(load_dataset(dataset_name, split='train'))
-        #     train_sets.append(train_set)
-
-        dataset_name = 'musts' + '/' + language
-        train_set = Dataset.to_pandas(load_dataset(dataset_name, split='train'))
-
+        train_sets = []
+        for language in languages:
+            dataset_name = 'musts' + '/' + language
+            train_set = Dataset.to_pandas(load_dataset(dataset_name, split='train'))
+            train_sets.append(train_set)
         logging.info("=============================================")
         logging.info("Start training")
         train_method(train_set)
