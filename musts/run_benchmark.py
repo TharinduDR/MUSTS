@@ -1,5 +1,4 @@
-from datasets import Dataset
-from datasets import load_dataset
+
 import pandas as pd
 
 from musts.evaluate import pearson_corr, spearman_corr, rmse
@@ -19,7 +18,7 @@ def test(test_method, train_method=None):
     # languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "korean", "portuguese",
     #               "romanian", "serbian", "sinhala", "spanish", "tamil"]
 
-    language = "english"
+    language = "sinhala"
 
 
     if train_method is not None:

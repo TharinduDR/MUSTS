@@ -28,6 +28,9 @@ def train_musts(train_df):
     train_df = train_df.rename(columns={'sentence_1': 'sentence1', 'sentence_2': 'sentence2', 'similarity': 'score'})
 
     train_df, eval_df = train_test_split(train_df, test_size=0.2)
+
+    train_df = train_df.reset_index(drop=True)
+    eval_df = eval_df.reset_index(drop=True)
     train_dataset = Dataset.from_pandas(train_df)
     eval_dataset = Dataset.from_pandas(eval_df)
 
