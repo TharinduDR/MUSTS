@@ -16,9 +16,9 @@ def capitalise_words(word):
     return ' '.join(capitalised_parts)
 
 
-def test(test_method, train_method=None):
+def train(train_method):
     languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "korean", "portuguese",
-                  "romanian", "serbian", "sinhala", "spanish", "tamil"]
+                 "romanian", "serbian", "sinhala", "spanish", "tamil"]
 
     # language = "sinhala"
 
@@ -33,6 +33,11 @@ def test(test_method, train_method=None):
         logging.info("=============================================")
         logging.info("Start training")
         train_method(combined_train_set)
+
+
+def test(test_method):
+    languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "korean", "portuguese",
+                 "romanian", "serbian", "sinhala", "spanish", "tamil"]
 
     for language in languages:
 

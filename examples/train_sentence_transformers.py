@@ -12,6 +12,7 @@ from datasets import Dataset
 logging.basicConfig(format="%(asctime)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
 
 final_output_dir = ""
+
 def train_musts(train_df):
     model_name = "dunzhang/stella_en_400M_v5"
     train_batch_size = 16
@@ -80,21 +81,21 @@ def train_musts(train_df):
     model.save(final_output_dir)
 
 
-def predict(to_predict):
-    model = SentenceTransformer(final_output_dir, trust_remote_code=True).cuda()
-    # query_prompt_name = "s2s_query"
-    sentences_1 = list(zip(*to_predict))[0]
-    sentences_2 = list(zip(*to_predict))[1]
+# def predict(to_predict):
+#     model = SentenceTransformer(final_output_dir, trust_remote_code=True).cuda()
+#     # query_prompt_name = "s2s_query"
+#     sentences_1 = list(zip(*to_predict))[0]
+#     sentences_2 = list(zip(*to_predict))[1]
+#
+#     embeddings_1 = model.encode(sentences_1, batch_size=32, show_progress_bar=True)
+#     embeddings_2 = model.encode(sentences_2, batch_size=32, show_progress_bar=True)
+#
+#     cosine_similarity_matrix = util.cos_sim(embeddings_1, embeddings_2)
+#     sims = cosine_similarity_matrix.diagonal().tolist()
+#
+#     del(model)
+#
+#     return sims
 
-    embeddings_1 = model.encode(sentences_1, batch_size=32, show_progress_bar=True)
-    embeddings_2 = model.encode(sentences_2, batch_size=32, show_progress_bar=True)
-
-    cosine_similarity_matrix = util.cos_sim(embeddings_1, embeddings_2)
-    sims = cosine_similarity_matrix.diagonal().tolist()
-
-    del(model)
-
-    return sims
-
-test(predict,train_musts)
+train(train_musts)
 
