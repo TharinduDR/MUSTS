@@ -28,9 +28,11 @@ def test(test_method, train_method=None):
             dataset_name = 'musts' + '/' + language
             train_set = Dataset.to_pandas(load_dataset(dataset_name, split='train'))
             train_sets.append(train_set)
+
+        combined_train_set = pd.concat(train_sets, ignore_index=True)
         logging.info("=============================================")
         logging.info("Start training")
-        train_method(train_set)
+        train_method(combined_train_set)
 
     for language in languages:
 
