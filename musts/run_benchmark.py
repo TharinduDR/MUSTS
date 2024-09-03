@@ -19,22 +19,22 @@ def test(test_method, train_method=None):
     # languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "korean", "portuguese",
     #               "romanian", "serbian", "sinhala", "spanish", "tamil"]
 
-    languages = ["sinhala"]
+    language = "sinhala"
 
 
     if train_method is not None:
-        train_sets = []
-        for language in languages:
-            dataset_name = 'musts' + '/' + language
-            train_set = Dataset.to_pandas(load_dataset(dataset_name, split='train'))
-            train_sets.append(train_set)
+        # train_sets = []
+        # for language in languages:
+        #     dataset_name = 'musts' + '/' + language
+        #     train_set = Dataset.to_pandas(load_dataset(dataset_name, split='train'))
+        #     train_sets.append(train_set)
 
-        combined_train_set = pd.concat(train_sets, ignore_index=True)
-        if '__index_level_0__' in combined_train_set.columns:
-            combined_train_set = combined_train_set.drop(columns='__index_level_0__')
+        dataset_name = 'musts' + '/' + language
+        train_set = Dataset.to_pandas(load_dataset(dataset_name, split='train'))
+
         logging.info("=============================================")
         logging.info("Start training")
-        train_method(combined_train_set)
+        train_method(train_set)
 
     for language in languages:
 
