@@ -42,8 +42,8 @@ def train(train_df):
         main_similarity=SimilarityFunction.COSINE,
         name="musts-dev",
     )
-    # train_dataset.to_csv("train.tsv", sep='\t', encoding='utf-8', index=False, header=True)
-    # eval_dataset.to_csv("eval.tsv", sep='\t', encoding='utf-8', index=False, header=True)
+    train_dataset.to_csv("train.tsv", sep='\t', encoding='utf-8', index=False, header=True)
+    eval_dataset.to_csv("eval.tsv", sep='\t', encoding='utf-8', index=False, header=True)
 
     # 5. Define the training arguments
     args = SentenceTransformerTrainingArguments(
