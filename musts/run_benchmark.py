@@ -29,8 +29,9 @@ def test(test_method, train_method=None):
             train_set = Dataset.to_pandas(load_dataset(dataset_name, split='train'))
             train_sets.append(train_set)
 
-        train_sets = [df.reset_index(drop=True) for df in train_sets]
         combined_train_set = pd.concat(train_sets, ignore_index=True)
+        if '__index_level_0__' in combined_train_set.columns:
+            combined_train_set = combined_train_set.drop(columns='__index_level_0__')
         logging.info("=============================================")
         logging.info("Start training")
         train_method(combined_train_set)

@@ -12,7 +12,7 @@ from datasets import Dataset
 logging.basicConfig(format="%(asctime)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
 
 final_output_dir = ""
-def train(train_df):
+def train_musts(train_df):
     model_name = "dunzhang/stella_en_400M_v5"
     train_batch_size = 4
     num_epochs = 5
@@ -97,5 +97,5 @@ def predict(to_predict):
 
     return sims
 
-test(predict,train)
+test(predict,train_musts)
 
