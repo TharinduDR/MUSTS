@@ -1,4 +1,4 @@
-from musts.run_benchmark import test
+from musts.run_benchmark import train
 from sentence_transformers import SentenceTransformer, losses, util
 from sentence_transformers.evaluation import EmbeddingSimilarityEvaluator
 from sentence_transformers.similarity_functions import SimilarityFunction
