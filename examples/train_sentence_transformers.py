@@ -51,6 +51,7 @@ def train_musts(train_df):
         # Required parameter:
         output_dir=output_dir,
         # Optional training parameters:
+        learning_rate=1e-4,
         num_train_epochs=num_epochs,
         per_device_train_batch_size=train_batch_size,
         per_device_eval_batch_size=train_batch_size,
