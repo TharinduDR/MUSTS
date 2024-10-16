@@ -51,7 +51,7 @@ def train_musts(train_df):
         # Required parameter:
         output_dir=output_dir,
         # Optional training parameters:
-        learning_rate=1e-4,
+        learning_rate=1e-6,
         num_train_epochs=num_epochs,
         per_device_train_batch_size=train_batch_size,
         per_device_eval_batch_size=train_batch_size,
@@ -60,11 +60,11 @@ def train_musts(train_df):
         bf16=False,  # Set to True if you have a GPU that supports BF16
         # Optional tracking/debugging parameters:
         evaluation_strategy="steps",
-        eval_steps=100,
+        eval_steps=500,
         save_strategy="steps",
-        save_steps=100,
+        save_steps=500,
         save_total_limit=2,
-        logging_steps=100,
+        logging_steps=500,
         run_name="musts-" + model_name,  # Will be used in W&B if `wandb` is installed
     )
 
