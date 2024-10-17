@@ -14,8 +14,8 @@ logging.basicConfig(format="%(asctime)s - %(message)s", datefmt="%Y-%m-%d %H:%M:
 final_output_dir = ""
 
 def train_musts(train_df):
-    model_name = "dunzhang/stella_en_400M_v5"
-    train_batch_size = 8
+    model_name = "dunzhang/stella_en_1.5B_v5"
+    train_batch_size = 4
     num_epochs = 5
     output_dir = (
         "output/training_musts" + model_name.replace("/", "-")
