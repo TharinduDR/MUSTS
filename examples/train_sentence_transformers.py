@@ -15,7 +15,7 @@ final_output_dir = ""
 
 def train_musts(train_df):
     model_name = "dunzhang/stella_en_1.5B_v5"
-    train_batch_size = 4
+    train_batch_size = 8
     num_epochs = 5
     output_dir = (
         "output/training_musts" + model_name.replace("/", "-")
@@ -51,7 +51,7 @@ def train_musts(train_df):
         # Required parameter:
         output_dir=output_dir,
         # Optional training parameters:
-        learning_rate=1e-6,
+        learning_rate=1e-8,
         num_train_epochs=num_epochs,
         per_device_train_batch_size=train_batch_size,
         per_device_eval_batch_size=train_batch_size,
