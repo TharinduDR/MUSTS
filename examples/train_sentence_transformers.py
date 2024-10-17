@@ -14,8 +14,8 @@ logging.basicConfig(format="%(asctime)s - %(message)s", datefmt="%Y-%m-%d %H:%M:
 final_output_dir = ""
 
 def train_musts(train_df):
-    model_name = "BAAI/bge-en-icl"
-    train_batch_size = 8
+    model_name = "nvidia/NV-Embed-v2"
+    train_batch_size = 2
     num_epochs = 5
     output_dir = (
         "output/training_musts_" + model_name.replace("/", "-")
