@@ -16,9 +16,9 @@ final_output_dir = ""
 def train_musts(train_df):
     model_name = "dunzhang/stella_en_400M_v5"
     train_batch_size = 16
-    num_epochs = 5
+    num_epochs = 10
     output_dir = (
-        "output/training_musts_" + model_name.replace("/", "-")
+        "output/training_musts_10" + model_name.replace("/", "-")
     )
 
     model = SentenceTransformer(model_name, trust_remote_code=True)

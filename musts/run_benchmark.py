@@ -20,7 +20,6 @@ def train(train_method):
     languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "korean", "portuguese",
                  "romanian", "serbian", "sinhala", "spanish", "tamil"]
 
-    # language = "sinhala"
 
     if train_method is not None:
         train_sets = []
