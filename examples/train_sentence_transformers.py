@@ -14,7 +14,7 @@ logging.basicConfig(format="%(asctime)s - %(message)s", datefmt="%Y-%m-%d %H:%M:
 final_output_dir = ""
 
 def train_musts(train_df):
-    model_name = "Alibaba-NLP/gte-Qwen2-7B-instruct"
+    model_name = "Alibaba-NLP/gte-Qwen2-1.5B-instruct"
     train_batch_size = 2
     num_epochs = 5
     output_dir = (
