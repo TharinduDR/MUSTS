@@ -22,6 +22,7 @@ def train_musts(train_df):
     )
 
     model = SentenceTransformer(model_name, trust_remote_code=True)
+    model.max_seq_length = 80
     train_df = train_df[["sentence_1", "sentence_2", "similarity"]]
     train_df['similarity'] = train_df['similarity'] / 5
     train_df = train_df.rename(columns={'sentence_1': 'sentence1', 'sentence_2': 'sentence2', 'similarity': 'score'})
