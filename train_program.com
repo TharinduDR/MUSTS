@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -p astro
 #SBATCH --gres=gpu:1
-#SBATCH --mem=48G
+#SBATCH --mem=16G
 #SBATCH --time=04:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mail-type=END,FAIL
