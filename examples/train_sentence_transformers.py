@@ -66,7 +66,7 @@ def train_musts(train_df):
         save_steps=500,
         save_total_limit=2,
         logging_steps=500,
-        run_name="musts-" + model_name,  # Will be used in W&B if `wandb` is installed
+        run_name="musts-" + model_name.replace("/", "-"),  # Will be used in W&B if `wandb` is installed
     )
 
     # 6. Create the trainer & start training
