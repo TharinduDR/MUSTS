@@ -3,7 +3,7 @@
 from sentence_transformers import SentenceTransformer, util
 from musts.run_benchmark import test
 
-model = SentenceTransformer("output/training_musts_dunzhang-stella_en_400M_v5/final", trust_remote_code=True).cuda()
+model = SentenceTransformer("output/training_mustsdunzhang-stella_en_400M_v5/final", trust_remote_code=True).cuda()
 
 def predict(to_predict):
     # query_prompt_name = "s2s_query"
