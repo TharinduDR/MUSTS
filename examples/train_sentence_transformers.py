@@ -14,7 +14,7 @@ logging.basicConfig(format="%(asctime)s - %(message)s", datefmt="%Y-%m-%d %H:%M:
 final_output_dir = ""
 
 def train_musts(train_df):
-    model_name = "google/mt5-large"
+    model_name = "bigscience-data/sgpt-bloom-1b7-nli"
     train_batch_size = 8
     num_epochs = 5
     output_dir = (
@@ -52,7 +52,7 @@ def train_musts(train_df):
         # Required parameter:
         output_dir=output_dir,
         # Optional training parameters:
-        learning_rate=1e-4,
+        learning_rate=1e-6,
         num_train_epochs=num_epochs,
         per_device_train_batch_size=train_batch_size,
         per_device_eval_batch_size=train_batch_size,
