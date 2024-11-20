@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -p astro
-#SBATCH --nodes=2
+#SBATCH --nodes=1
 #SBATCH --gres=gpu:2
 #SBATCH --mem=48G
 #SBATCH --time=12:00:00
@@ -15,4 +15,4 @@ module add cuda/12.0
 source activate /storage/hpc/37/ranasint/conda_envs/sts_exp
 export HF_HOME=/scratch/hpc/37/ranasint/hf_cache
 
-accelerate launch --num_processes 2 -m examples.train_sentence_transformers
+torchrun --nproc_per_node=2 -m examples.train_sentence_transformers
