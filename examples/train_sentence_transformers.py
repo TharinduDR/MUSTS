@@ -13,12 +13,13 @@ logging.basicConfig(format="%(asctime)s - %(message)s", datefmt="%Y-%m-%d %H:%M:
 
 final_output_dir = ""
 
+
 def train_musts(train_df):
     model_name = "bigscience-data/sgpt-bloom-1b7-nli"
     train_batch_size = 8
     num_epochs = 5
     output_dir = (
-        "output/training_musts_" + model_name.replace("/", "-")
+            "output/training_musts_" + model_name.replace("/", "-")
     )
 
     model = SentenceTransformer(model_name, trust_remote_code=True)
@@ -99,5 +100,9 @@ def train_musts(train_df):
 #
 #     return sims
 
-train(train_musts)
+def main():
+    train(train_musts)
 
+
+if __name__ == "__main__":
+    main()
