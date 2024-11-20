@@ -14,4 +14,4 @@ module add cuda/12.0
 source activate /storage/hpc/37/ranasint/conda_envs/sts_exp
 export HF_HOME=/scratch/hpc/37/ranasint/hf_cache
 
-python -m examples.flag_embedding
+python -m examples.sentence_transformers
