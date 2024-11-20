@@ -5,7 +5,7 @@ from FlagEmbedding import FlagLLMModel
 
 from musts.run_benchmark import test
 
-model = FlagLLMModel('BAAI/bge-multilingual-gemma2',
+model = FlagLLMModel('BAAI/bge-en-icl',
                   query_instruction_for_retrieval="Represent this sentence for searching relevant passages:",
                   use_fp16=True)
 
