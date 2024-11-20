@@ -1,5 +1,6 @@
 #!/bin/bash
 #SBATCH -p astro
+#SBATCH --nodes=2
 #SBATCH --gres=gpu:2
 #SBATCH --mem=48G
 #SBATCH --time=12:00:00
