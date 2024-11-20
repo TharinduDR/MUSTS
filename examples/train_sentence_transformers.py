@@ -16,7 +16,7 @@ final_output_dir = ""
 
 def train_musts(train_df):
     model_name = "Alibaba-NLP/gte-Qwen2-1.5B-instruct"
-    train_batch_size = 2
+    train_batch_size = 8
     num_epochs = 5
     output_dir = (
             "output/training_musts_" + model_name.replace("/", "-")
