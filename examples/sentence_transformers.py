@@ -3,7 +3,7 @@
 from sentence_transformers import SentenceTransformer, util
 from musts.run_benchmark import test
 
-model = SentenceTransformer("BAAI/bge-en-icl", trust_remote_code=True).cuda()
+model = SentenceTransformer("/storage/hpc/37/ranasint/projects/MUSTS/output/training_musts_Alibaba-NLP-gte-Qwen2-1.5B-instruct/final", trust_remote_code=True).cuda()
 
 def predict(to_predict):
     # query_prompt_name = "s2s_query"
