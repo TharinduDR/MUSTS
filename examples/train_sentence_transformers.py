@@ -15,7 +15,7 @@ final_output_dir = ""
 
 
 def train_musts(train_df):
-    model_name = "Alibaba-NLP/gte-Qwen2-1.5B-instruct"
+    model_name = "dunzhang/stella_en_1.5B_v5"
     train_batch_size = 8
     num_epochs = 10
     output_dir = (
