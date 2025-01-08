@@ -7,7 +7,7 @@ from musts.run_benchmark import test
 
 def predict(to_predict):
     model_args = WordEmbeddingSTSArgs()
-    model_args.embedding_models = [["transformer", "google/rembert"]]
+    model_args.embedding_models = [["transformer", "microsoft/infoxlm-large"]]
     model = WordEmbeddingAverageSTSMethod(model_args=model_args)
     pred_sims = model.predict(to_predict)
 
