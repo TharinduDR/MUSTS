@@ -5,7 +5,7 @@ from laser_encoders import LaserEncoderPipeline
 
 from musts.run_benchmark import test
 
-model = LaserEncoderPipeline('srp_Cyrl')
+model = LaserEncoderPipeline('sin_Sinh')
 
 def predict(to_predict):
     # query_prompt_name = "s2s_query"
