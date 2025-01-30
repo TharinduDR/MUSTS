@@ -59,7 +59,7 @@ def query(pipe, inputs):
     for out in tqdm(pipe(
             inputs,
             max_new_tokens=200,
-            pad_token_id=pipe.model.config.eos_token_id,
+            # pad_token_id=pipe.model.config.eos_token_id,
     )):
         assistant_outputs.append(out[0]["generated_text"][-1]['content'].strip())
 
