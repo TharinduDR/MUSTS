@@ -1,14 +1,15 @@
 import logging
 import os
+import re
 from pprint import pprint
 
 import pandas as pd
+import torch
 from datasets import Dataset, load_dataset
 from tqdm.auto import tqdm
 from transformers import pipeline, set_seed
-import torch
 
-from musts.run_benchmark import test, capitalise_words
+from musts.run_benchmark import capitalise_words
 
 os.environ['HF_HOME'] = '/mnt/data/hettiar1/hf_cache/'
 set_seed(777)
@@ -16,7 +17,7 @@ set_seed(777)
 OUTPUT_FOLDER = "outputs/llama"
 if not os.path.exists(OUTPUT_FOLDER): os.makedirs(OUTPUT_FOLDER)
 
-QUERY_TYPE="zero-shot"
+QUERY_TYPE = "zero-shot"
 
 # load pipeline
 # model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
@@ -30,6 +31,7 @@ pipe_lm = pipeline(
     do_sample=False,
     top_p=1.0,
 )
+
 
 def format_chat(row):
     match QUERY_TYPE:
@@ -47,21 +49,31 @@ def format_chat(row):
 
 
 def query(pipe, inputs):
-  """
-  :param pipe: text-generation pipeline
-  :param model_folder_path: list of messages
-  :return: list
-  """
-  assistant_outputs = []
+    """
+    :param pipe: text-generation pipeline
+    :param model_folder_path: list of messages
+    :return: list
+    """
+    assistant_outputs = []
 
-  for out in tqdm(pipe(
-      inputs,
-      max_new_tokens=200,
-      pad_token_id = pipe.model.config.eos_token_id,
-  )):
-    assistant_outputs.append(out[0]["generated_text"][-1]['content'].strip())
+    for out in tqdm(pipe(
+            inputs,
+            max_new_tokens=200,
+            pad_token_id=pipe.model.config.eos_token_id,
+    )):
+        assistant_outputs.append(out[0]["generated_text"][-1]['content'].strip())
 
-  return assistant_outputs
+    return assistant_outputs
+
+
+def extract_score(response):
+    try:
+        score = re.findall('Score:\s(\d+\.\d+|\d+)', response)[0]
+    except IndexError:
+        score = 0
+    if score > 5:
+        score = 5
+    return score
 
 
 def test(test_method):
@@ -84,25 +96,24 @@ def test(test_method):
 
         predicted_sims = test_method(to_predit)
 
-def predict(to_predict):
-    # sentences_1 = list(zip(*to_predict))[0]
-    # sentences_2 = list(zip(*to_predict))[1]
 
+def predict(to_predict):
     df = pd.DataFrame(to_predict, columns=['sentence1', 'sentence2'])
     df = df.head(10)
-    print(df.shape)
+    # print(df.shape)
 
     # format chats
     df.loc[:, 'chat'] = df.apply(format_chat, axis=1)
     pprint(df.loc[:2, 'chat'].tolist(), sort_dicts=False)
 
     # generate responses
-
     responses = query(pipe_lm, df['chat'].tolist())
     df['responses'] = responses
 
+    # extract scores
+    df['preds'] = df.apply(lambda row: extract_score(row['responses']), axis=1)
+
     df.to_csv(os.path.join(OUTPUT_FOLDER, "sample.csv"), header=True, index=False, encoding='utf-8')
-    print()
 
 
 test(predict)
