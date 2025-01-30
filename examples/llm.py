@@ -68,11 +68,13 @@ def query(pipe, inputs):
 
 def extract_score(response):
     try:
-        score = re.findall('Score:\s(\d+\.\d+|\d+)', response)[0]
+        score = float(re.findall('Score:\s(\d+\.\d+|\d+)', response)[0])
     except IndexError:
-        score = 0
+        score = 0.0
     if score > 5:
-        score = 5
+        score = 5.0
+    elif score < 0:
+        score = 0.0
     return score
 
 
