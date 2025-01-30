@@ -33,8 +33,12 @@ pipe_lm = pipeline(
 def format_chat(row):
     match QUERY_TYPE:
         case "zero-shot":
+            # return [
+            #     {"role": "user", "content": f"Determine the similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. S1: {row['sentence1']} S2: {row['sentence2']} Score:"}]
             return [
-                {"role": "user", "content": f"Determine the similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. S1: {row['sentence1']} S2: {row['sentence2']} Score:"}]
+                {"role": "user",
+                 "content": f"Determine the similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the label only following the prefix 'Score:' without any other text. S1: {row['sentence1']} S2: {row['sentence2']}"}]
+
         case _:
             return [
                 {"role": "user",
@@ -92,6 +96,7 @@ def predict(to_predict):
     pprint(df.loc[:2, 'chat'].tolist(), sort_dicts=False)
 
     # generate responses
+
     responses = query(pipe_lm, df['chat'].tolist())
     df['responses'] = responses
 
