@@ -38,9 +38,12 @@ def format_chat(row):
         case "zero-shot":
             # return [
             #     {"role": "user", "content": f"Determine the similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. S1: {row['sentence1']} S2: {row['sentence2']} Score:"}]
+            # return [
+            #     {"role": "user",
+            #      "content": f"Determine the similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the label only following the prefix 'Score:' without any other text. S1: {row['sentence1']} S2: {row['sentence2']}"}]
             return [
                 {"role": "user",
-                 "content": f"Determine the similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the label only following the prefix 'Score:' without any other text. S1: {row['sentence1']} S2: {row['sentence2']}"}]
+                 "content": f"Determine the similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the score only following the prefix 'Score:' without any other text or explanations. S1: {row['sentence1']} S2: {row['sentence2']}"}]
 
         case _:
             return [
