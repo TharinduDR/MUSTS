@@ -20,8 +20,8 @@ if not os.path.exists(OUTPUT_FOLDER): os.makedirs(OUTPUT_FOLDER)
 QUERY_TYPE = "zero-shot"
 
 # load pipeline
-# model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
-model_id = "meta-llama/Llama-3.1-8B-Instruct"
+model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
+# model_id = "meta-llama/Llama-3.1-8B-Instruct"
 
 pipe_lm = pipeline(
     "text-generation",
