@@ -35,8 +35,9 @@ def train(train_method):
 
 
 def test(test_method):
-    languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "japanese", "korean", "portuguese",
-                 "romanian", "serbian", "sinhala", "spanish", "tamil"]
+    # languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "japanese", "korean", "portuguese",
+    #              "romanian", "serbian", "sinhala", "spanish", "tamil"]
+    languages = ["english"]
 
     for language in languages:
 
@@ -53,7 +54,7 @@ def test(test_method):
             to_predit.append([row['sentence_1'], row['sentence_2']])
             sims.append(row['similarity'])
 
-        predicted_sims = test_method(to_predit)
+        predicted_sims = test_method(to_predit, language)  # Need to fix
 
         logging.info("Pearson Correlation %f", pearson_corr(predicted_sims, sims))
         logging.info("Spearman Correlation %f", spearman_corr(predicted_sims, sims))
