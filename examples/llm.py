@@ -115,7 +115,7 @@ def extract_score(response):
 
 def predict(to_predict, language):
     df = pd.DataFrame(to_predict, columns=['sentence1', 'sentence2'])
-    df = df.head(10)
+    # df = df.head(10)
     # print(df.shape)
 
     # format chats
