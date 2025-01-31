@@ -12,14 +12,14 @@ from musts.run_benchmark import test
 os.environ['HF_HOME'] = '/mnt/data/hettiar1/hf_cache/'
 set_seed(777)
 
-OUTPUT_FOLDER = "outputs/llama"
-if not os.path.exists(OUTPUT_FOLDER): os.makedirs(OUTPUT_FOLDER)
-
 QUERY_TYPE = "zero-shot"
 
 # load pipeline
 # model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
 model_id = "meta-llama/Llama-3.1-8B-Instruct"
+
+OUTPUT_FOLDER = os.path.join("outputs", model_id.split('/')[-1])
+if not os.path.exists(OUTPUT_FOLDER): os.makedirs(OUTPUT_FOLDER)
 
 pipe_lm = pipeline(
     "text-generation",
@@ -115,7 +115,7 @@ def extract_score(response):
 
 def predict(to_predict, language):
     df = pd.DataFrame(to_predict, columns=['sentence1', 'sentence2'])
-    # df = df.head(10)
+    df = df.head(10)
     # print(df.shape)
 
     # format chats
@@ -129,7 +129,7 @@ def predict(to_predict, language):
     # extract scores
     df['preds'] = df.apply(lambda row: extract_score(row['responses']), axis=1)
 
-    df.to_csv(os.path.join(OUTPUT_FOLDER, model_id.split('/')[-1], f"{language}.csv"), header=True, index=False,
+    df.to_csv(os.path.join(OUTPUT_FOLDER, f"{language}.csv"), header=True, index=False,
               encoding='utf-8')
 
     return df['preds'].tolist()
