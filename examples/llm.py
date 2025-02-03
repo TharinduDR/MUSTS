@@ -70,7 +70,7 @@ def format_chat(row):
             few_shot_df = get_few_shots("English")
             few_shot_prompt = ("Five demonstration examples\n\n")
             for idx, (index, row) in enumerate(few_shot_df.iterrows()):
-                fewshot_prompt = fewshot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']} S2: {row['sentence_2']} Score: {row['similarity']}\n\n"
+                few_shot_prompt = few_shot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']} S2: {row['sentence_2']} Score: {row['similarity']}\n\n"
 
             return [
                 {"role": "user",
