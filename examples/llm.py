@@ -33,11 +33,15 @@ pipe_lm = pipeline(
     top_p=1.0,
 )
 
-
+few_shot_prompt = ""  # to be intialised by the code
 def get_few_shots(language, n=5):
     dataset_name = 'musts' + '/' + language
     train_set = Dataset.to_pandas(load_dataset(dataset_name, split='train'))
     few_shot_df = train_set.sample(n, random_state=777)
+
+    few_shot_prompt = ("Five demonstration examples\n\n")
+    for idx, (index, row) in enumerate(few_shot_df.iterrows()):
+        few_shot_prompt = few_shot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']} S2: {row['sentence_2']} Score: {row['similarity']}\n\n"
     return few_shot_df
 
 
@@ -67,10 +71,10 @@ def format_chat(row):
                  "content": f"S1: {row['sentence1']} S2: {row['sentence2']}"}]
 
         case "few-shot-en":
-            few_shot_df = get_few_shots("English")
-            few_shot_prompt = ("Five demonstration examples\n\n")
-            for idx, (index, row) in enumerate(few_shot_df.iterrows()):
-                few_shot_prompt = few_shot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']} S2: {row['sentence_2']} Score: {row['similarity']}\n\n"
+            # few_shot_df = get_few_shots("English")
+            # few_shot_prompt = ("Five demonstration examples\n\n")
+            # for idx, (index, row) in enumerate(few_shot_df.iterrows()):
+            #     few_shot_prompt = few_shot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']} S2: {row['sentence_2']} Score: {row['similarity']}\n\n"
 
             return [
                 {"role": "user",
@@ -145,6 +149,10 @@ def predict(to_predict, language):
     # print(df.shape)
 
     # format chats
+    match QUERY_TYPE:
+        case "few-shot-en":
+            get_few_shots("English")
+
     df.loc[:, 'chat'] = df.apply(format_chat, axis=1)
     # pprint(df.loc[:2, 'chat'].tolist(), sort_dicts=False)
 
