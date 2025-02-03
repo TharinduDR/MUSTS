@@ -4,6 +4,7 @@ import os
 import os
 import re
 
+import numpy as np
 import pandas as pd
 import torch
 from datasets import Dataset, load_dataset
@@ -37,7 +38,11 @@ few_shot_prompt = ""  # to be intialised by the code
 def get_few_shots(language, n=5):
     dataset_name = 'musts' + '/' + language
     train_set = Dataset.to_pandas(load_dataset(dataset_name, split='train'))
-    few_shot_df = train_set.sample(n, random_state=777)
+
+    # few_shot_df = train_set.sample(n, random_state=777)
+    bins = np.linspace(train_set['similarity'].min(), train_set['similarity'].max(), n+1)
+    train_set['score_bin'] = pd.cut(train_set['similarity'], bins=bins, include_lowest=True)
+    few_shot_df = train_set.groupby('score_bin').apply(lambda x: x.sample(n=1, random_state=777).reset_index(drop=True))
 
     global few_shot_prompt
     few_shot_prompt = ("Five demonstration examples\n\n")
