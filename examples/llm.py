@@ -42,7 +42,7 @@ def get_few_shots(language, n=5):
     global few_shot_prompt
     few_shot_prompt = ("Five demonstration examples\n\n")
     for idx, (index, row) in enumerate(few_shot_df.iterrows()):
-        few_shot_prompt = few_shot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']} S2: {row['sentence_2']} Score: {row['similarity']}\n\n"
+        few_shot_prompt = few_shot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']}\n S2: {row['sentence_2']}\n Score: {row['similarity']}\n\n"
     return few_shot_df
 
 
@@ -72,11 +72,6 @@ def format_chat(row):
                  "content": f"S1: {row['sentence1']} S2: {row['sentence2']}"}]
 
         case "few-shot-en":
-            # few_shot_df = get_few_shots("English")
-            # few_shot_prompt = ("Five demonstration examples\n\n")
-            # for idx, (index, row) in enumerate(few_shot_df.iterrows()):
-            #     few_shot_prompt = few_shot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']} S2: {row['sentence_2']} Score: {row['similarity']}\n\n"
-
             return [
                 {"role": "user",
                  "content": few_shot_prompt + f"Determine the semantic textual similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the score only following the prefix 'Score:' without any other text or explanations. S1: {row['sentence1']} S2: {row['sentence2']}"}]
