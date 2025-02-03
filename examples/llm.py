@@ -1,9 +1,12 @@
+# 2784246
+
 import os
 import os
 import re
 
 import pandas as pd
 import torch
+from datasets import Dataset, load_dataset
 from tqdm.auto import tqdm
 from transformers import pipeline, set_seed
 
@@ -12,7 +15,7 @@ from musts.run_benchmark import test
 os.environ['HF_HOME'] = '/mnt/data/hettiar1/hf_cache/'
 set_seed(777)
 
-QUERY_TYPE = "zero-shot"
+QUERY_TYPE = "few-shot-en"
 
 # load pipeline
 # model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
@@ -31,6 +34,13 @@ pipe_lm = pipeline(
 )
 
 
+def get_few_shots(language, n=5):
+    dataset_name = 'musts' + '/' + language
+    train_set = Dataset.to_pandas(load_dataset(dataset_name, split='train'))
+    few_shot_df = train_set.sample(n, random_state=777)
+    return few_shot_df
+
+
 def format_chat(row):
     match QUERY_TYPE:
         case "zero-shot":
@@ -45,15 +55,26 @@ def format_chat(row):
             # return [
             #     {"role": "user",
             #      "content": f"Determine the semantic textual similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 (for no similarity) to 5.0 (for identical meaning), and can be a decimal. Return the score only following the prefix 'Score:' without any other text or explanations. S1: {row['sentence1']} S2: {row['sentence2']}"}]
-            # return [
-            #     {"role": "user",
-            #      "content": f"Determine the semantic textual similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the score only following the prefix 'Score:' without any other text or explanations. S1: {row['sentence1']} S2: {row['sentence2']}"}]
+            return [
+                {"role": "user",
+                 "content": f"Determine the semantic textual similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the score only following the prefix 'Score:' without any other text or explanations. S1: {row['sentence1']} S2: {row['sentence2']}"}]
+
+        case "zero-shot-sys":
             return [
                 {"role": "system",
                  "content": f"Determine the semantic textual similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the score only following the prefix 'Score:' without any other text or explanations."},
                 {"role": "user",
                  "content": f"S1: {row['sentence1']} S2: {row['sentence2']}"}]
 
+        case "few-shot-en":
+            few_shot_df = get_few_shots("English")
+            few_shot_prompt = ("Five demonstration examples\n\n")
+            for idx, (index, row) in enumerate(few_shot_df.iterrows()):
+                fewshot_prompt = fewshot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']} S2: {row['sentence_2']} Score: {row['similarity']}\n\n"
+
+            return [
+                {"role": "user",
+                 "content": few_shot_prompt + f"Determine the semantic textual similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the score only following the prefix 'Score:' without any other text or explanations. S1: {row['sentence1']} S2: {row['sentence2']}"}]
         case _:
             return [
                 {"role": "user",
@@ -120,7 +141,7 @@ def extract_score(response):
 
 def predict(to_predict, language):
     df = pd.DataFrame(to_predict, columns=['sentence1', 'sentence2'])
-    # df = df.head(10)
+    df = df.head(10)
     # print(df.shape)
 
     # format chats
