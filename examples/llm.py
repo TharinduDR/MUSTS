@@ -178,8 +178,7 @@ def predict(to_predict, language):
         get_few_shots(language)
 
     df.loc[:, 'chat'] = df.apply(format_chat, axis=1)
-    pprint(df.loc[:2, 'chat'].tolist(), sort_dicts=False)
-    # pprint(df.loc[:2, 'chat'].tolist())
+    # pprint(df.loc[:2, 'chat'].tolist(), sort_dicts=False)
 
     # generate responses
     responses = query(pipe_lm, df['chat'].tolist())
@@ -200,5 +199,6 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     QUERY_TYPE = args.query_type
+    # print(f"query type: {QUERY_TYPE}")
 
     test(predict)
