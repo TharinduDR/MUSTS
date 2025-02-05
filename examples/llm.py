@@ -36,6 +36,7 @@ pipe_lm = pipeline(
     top_p=1.0,
 )
 
+
 few_shot_prompt = None  # to be intialised by the code
 def get_few_shots(language, n=5):
     dataset_name = 'musts' + '/' + language
@@ -56,11 +57,27 @@ def get_few_shots(language, n=5):
         few_shot_prompt = ("Five demonstration examples\n\n")
         for idx, (index, row) in enumerate(few_shot_df.iterrows()):
             few_shot_prompt = few_shot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']}\n S2: {row['sentence_2']}\n Score: {row['similarity']}\n\n"
-    return few_shot_df
+
+
+def get_few_shots_sem13():
+    sem13_df = pd.read_csv("examples/few_shots_sem13.csv", encoding="utf-8", delimiter="\t")
+    global few_shot_prompt
+
+    if "cot" in QUERY_TYPE:
+        few_shot_prompt = ("Six demonstration examples with explanation for each:\n\n")
+        for idx, (index, row) in enumerate(sem13_df.iterrows()):
+            few_shot_prompt = few_shot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']}\n S2: {row['sentence_2']}\n Explain: {row['explanation_1']}\n Score: {row['similarity']}\n\n"
+    else:
+        few_shot_prompt = ("Six demonstration examples\n\n")
+        for idx, (index, row) in enumerate(sem13_df.iterrows()):
+            few_shot_prompt = few_shot_prompt + f"Example {idx + 1}:\n S1: {row['sentence_1']}\n S2: {row['sentence_2']}\n Score: {row['similarity']}\n\n"
 
 
 def format_chat(row):
-    task_desc = "Determine the semantic textual similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the score only following the prefix 'Score:' without any other text or explanations."
+    # task_desc = "Determine the semantic textual similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the score only following the prefix 'Score:' without any other text or explanations."
+    task_desc = "Determine the semantic textual similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal."
+    action_desc = "Return the score only following the prefix 'Score:' without any other text or explanations."
+    action_desc_cot = "Return the explanation and score only following the prefixes 'Explain:' and Score:' without any other text."
     match QUERY_TYPE:
         case "zero-shot":
             # return [
@@ -77,30 +94,38 @@ def format_chat(row):
             return [
                 {"role": "user",
                  # "content": f"Determine the semantic textual similarity between the following two sentences (S1, S2). The score should be ranging from 0.0 to 5.0, and can be a decimal. Return the score only following the prefix 'Score:' without any other text or explanations. S1: {row['sentence1']} S2: {row['sentence2']}"}]
-                "content": f"{task_desc} S1: {row['sentence1']} S2: {row['sentence2']}"}]
+                "content": f"{task_desc} {action_desc} S1: {row['sentence1']} S2: {row['sentence2']}"}]
 
         case "zero-shot-sys":
             return [
-                {"role": "system", "content": task_desc},
+                {"role": "system", "content": f"{task_desc} {action_desc}"},
                 {"role": "user", "content": f"S1: {row['sentence1']} S2: {row['sentence2']}"}]
 
         case "few-shot-en":
             return [
-                {"role": "user", "content": few_shot_prompt + f"{task_desc} S1: {row['sentence1']} S2: {row['sentence2']}"}]
+                {"role": "user", "content": few_shot_prompt + f"{task_desc} {action_desc} S1: {row['sentence1']} S2: {row['sentence2']}"}]
 
         case "few-shot-en-sys":
-            return ([{"role": "system", "content": task_desc}] +
+            return ([{"role": "system", "content": f"{task_desc} {action_desc}"}] +
                     few_shot_prompt +
                     [{"role": "user", "content": f"S1: {row['sentence1']} S2: {row['sentence2']}"}])
 
         case "few-shot-mono":
             return [
-                {"role": "user", "content": few_shot_prompt + f"{task_desc} S1: {row['sentence1']} S2: {row['sentence2']}"}]
+                {"role": "user", "content": few_shot_prompt + f"{task_desc} {action_desc} S1: {row['sentence1']} S2: {row['sentence2']}"}]
 
         case "few-shot-mono-sys":
-            return ([{"role": "system", "content": task_desc}] +
+            return ([{"role": "system", "content": f"{task_desc} {action_desc}"}] +
                     few_shot_prompt +
                     [{"role": "user", "content": f"S1: {row['sentence1']} S2: {row['sentence2']}"}])
+
+        case "few-shot-sem13":
+            return [
+                {"role": "user", "content": few_shot_prompt + f"{task_desc} {action_desc} S1: {row['sentence1']} S2: {row['sentence2']}"}]
+        case "few-shot-sem13-cot":
+            return [
+                {"role": "user",
+                 "content": f"{task_desc} {action_desc_cot}\n\n" + few_shot_prompt + f"S1: {row['sentence1']} S2: {row['sentence2']}"}]
 
         case _:
             return [
@@ -172,6 +197,8 @@ def predict(to_predict, language):
     # print(df.shape)
 
     # format chats
+    if "sem13" in QUERY_TYPE:
+        get_few_shots_sem13()
     if "few-shot-en" in QUERY_TYPE:
         get_few_shots("English")
     elif "few-shot-mono" in QUERY_TYPE:

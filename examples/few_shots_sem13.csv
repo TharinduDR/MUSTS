@@ -1,0 +1,7 @@
+sentence_1	sentence_2	similarity	explanation_1	explanation_2
+The black dog is running through the snow.	A race car driver is driving his car through the mud.	0.0	S1 and S2 are completely dissimilar.	"S1 and S2 are completely dissimilar. Thus, the similarity score is 0."
+The woman is playing the violin.	The young lady enjoys listening to the guitar.	1.0	"S1 and S2 are not equivalent, but are on the same topic."	"S1 and S2 are not equivalent, but are on the same topic. Thus, the similarity score is 1."
+They flew out of the nest in groups.	They flew into the nest together.	2.0	"S1 and S2 are not equivalent, but share some details."	"S1 and S2 are not equivalent, but share some details. Thus, the similarity score is 2."
+John said he is considered a witness but not a suspect.	"""He is not a suspect anymore."" John said."	3.0	"S1 and S2 are roughly equivalent, but some important information differs/missing."	"S1 and S2 are roughly equivalent, but some important information differs/missing. Thus, the similarity score is 3."
+Two boys on a couch are playing video games.	Two boys are playing a video game.	4.0	"S1 and S2 are mostly equivalent, but some unimportant details differ."	"S1 and S2 are mostly equivalent, but some unimportant details differ. Thus, the similarity score is 4."
+The bird is bathing in the sink.	Birdie is washing itself in the water basin.	5.0	"S1 and S2 are completely equivalent, as they mean the same thing."	"S1 and S2 are completely equivalent, as they mean the same thing. Thus, the similarity score is 5."
