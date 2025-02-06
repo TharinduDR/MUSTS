@@ -35,7 +35,9 @@ def train(train_method):
 
 
 def test(test_method):
-    languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "japanese", "korean", "portuguese",
+    # languages = ["arabic", "brazilian_portuguese", "czech", "english", "french", "japanese", "korean", "portuguese",
+    #              "romanian", "serbian", "sinhala", "spanish", "tamil"]
+    languages = ["english", "arabic", "brazilian_portuguese", "czech", "french", "japanese", "korean", "portuguese",
                  "romanian", "serbian", "sinhala", "spanish", "tamil"]
     # languages = ["english"]
 
