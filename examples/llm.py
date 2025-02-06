@@ -22,7 +22,8 @@ QUERY_TYPE = "few-shot-mono-sys"
 
 # load pipeline
 # model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
-model_id = "meta-llama/Llama-3.1-8B-Instruct"
+# model_id = "meta-llama/Llama-3.1-8B-Instruct"
+model_id = "mistralai/Ministral-8B-Instruct-2410"
 
 OUTPUT_FOLDER = os.path.join("outputs", model_id.split('/')[-1])
 if not os.path.exists(OUTPUT_FOLDER): os.makedirs(OUTPUT_FOLDER)
