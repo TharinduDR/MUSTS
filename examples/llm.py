@@ -142,17 +142,17 @@ def query(pipe, inputs):
     """
     assistant_outputs = []
 
-    terminators = [
-        pipe.tokenizer.eos_token_id,
-        pipe.tokenizer.convert_tokens_to_ids("<|eot_id|>")
-    ]
+    # terminators = [
+    #     pipe.tokenizer.eos_token_id,
+    #     pipe.tokenizer.convert_tokens_to_ids("<|eot_id|>")
+    # ]
 
     for out in tqdm(pipe(
             inputs,
             max_new_tokens=200,
-            # pad_token_id=pipe.model.config.eos_token_id,
-            eos_token_id=terminators,
-            pad_token_id=pipe.tokenizer.eos_token_id
+            pad_token_id=pipe.model.config.eos_token_id,
+            # eos_token_id=terminators,
+            # pad_token_id=pipe.tokenizer.eos_token_id
     )):
         assistant_outputs.append(out[0]["generated_text"][-1]['content'].strip())
 
