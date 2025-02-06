@@ -28,6 +28,8 @@ model_id = "mistralai/Ministral-8B-Instruct-2410"
 OUTPUT_FOLDER = os.path.join("outputs", model_id.split('/')[-1])
 if not os.path.exists(OUTPUT_FOLDER): os.makedirs(OUTPUT_FOLDER)
 
+print(model_id)
+
 pipe_lm = pipeline(
     "text-generation",
     model=model_id,
